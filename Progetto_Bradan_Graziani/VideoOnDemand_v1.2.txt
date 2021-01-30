@@ -1,0 +1,39 @@
+Flow :=
+A B A    0
+A B C    0
+A C A   15
+A C C    0
+B D A    0
+B D C    0
+C D A    5
+C D C    0
+C E A   10
+C E C   10
+D E A    5
+D E C    0
+D F A    0
+D F C    0
+E F A    0
+E F C    0
+E G A   15
+E G C   10
+F G A    0
+F G C    0
+;
+
+LinkActivation :=
+A B   0
+A C   1
+B D   0
+C D   1
+C E   1
+D E   1
+D F   0
+E F   0
+E G   1
+F G   0
+;
+
+TotalFlowCosts = 114250
+MaxLatency = 45
+

@@ -1,0 +1,45 @@
+set Vertixes := A, B, C, D, E, F, G;
+set Origins:= A, C;
+set Destinations := G;
+set Transshipments := B, D, E, F;
+set Links :=
+(A,B)
+(A,C)
+(C,E)
+(B,D)
+(C,D)
+(D,E)
+(D,F)
+(E,G)
+(E,F)
+(F,G);
+
+param: ActivationCosts TravelCosts Capacities :=
+A,B 10000 300 10
+A,C 15000 150 20
+C,E 30000 500 10
+B,D 18000 300 10
+C,D 20000 300 20
+D,E 12000 500 7
+D,F 16000 350 8
+E,G 16000 200 20
+E,F 12000 250 17
+F,G 10000 300 15;
+
+param Loads :=
+A -15
+B 0
+C -10
+D 0
+E 0
+F 0
+G 25;
+
+set ForbiddenLink :=
+(A,C);
+
+param Latency1A := 0;
+param Latency2A := 0;
+param Latency1C := 0;
+param Latency2C := 0;
+param MaxLatency := 0;

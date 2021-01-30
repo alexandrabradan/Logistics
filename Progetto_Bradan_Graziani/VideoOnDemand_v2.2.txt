@@ -1,0 +1,39 @@
+:     Flow1 Flow2    :=
+A B A    0     0
+A B C    0     0
+A C A    7     8
+A C C    0     0
+B D A    0     0
+B D C    0     0
+C D A    0     0
+C D C    0     0
+C E A    7     8
+C E C    5     5
+D E A    0     0
+D E C    0     0
+D F A    0     0
+D F C    0     0
+E F A    0     0
+E F C    0     0
+E G A    7     8
+E G C    5     5
+F G A    0     0
+F G C    0     0
+;
+
+LinkActivation :=
+A B   0
+A C   1
+B D   0
+C D   0
+C E   1
+D E   0
+D F   0
+E F   0
+E G   1
+F G   0
+;
+
+TotalFlowCosts = 80750
+MaxLatency = 41
+

@@ -1,0 +1,31 @@
+reset;
+model Progetto_Bradan_Graziani/VideoOnDemand_v1.2.mod;
+data Progetto_Bradan_Graziani/VideoOnDemand_v1.2.dat;
+option solver cplex;
+solve;
+for {(i,j) in Links, o in Origins}{
+	if i == 'A' and j == 'C' and o == 'A' then{
+	let Latency1A := Latency1A + Flow[i,j,o]*LinkActivation[i,j] + 10;
+	let Latency2A := Latency2A + Flow[i,j,o]*LinkActivation[i,j];
+	}
+	if i == 'C' and j == 'D' or i == 'D' and j == 'E' and o == 'A' then{
+	let Latency2A := Latency2A + Flow[i,j,o]*LinkActivation[i,j];
+	}
+	if i == 'C' and j == 'E' and o == 'A' then{
+	let Latency1A := Latency1A + Flow[i,j,o]*LinkActivation[i,j];
+	}
+	if i == 'C' and j == 'E' and o == 'C' then{
+	let Latency1C := Latency1C + Flow[i,j,o]*LinkActivation[i,j];
+	}
+	if i == 'E' and j == 'G' and o == 'A' then{
+	let Latency1A := Latency1A + Flow[i,j,o]*LinkActivation[i,j] - 5;
+	let Latency2A := Latency2A + Flow[i,j,o]*LinkActivation[i,j] - 10;
+	}
+	if i == 'E' and j == 'G' and o == 'C' then{
+	let Latency1C := Latency1C + Flow[i,j,o]*LinkActivation[i,j];
+	}
+}
+let MaxLatency := max(Latency1A, Latency2A, Latency1C);
+display Flow, LinkActivation, TotalFlowCosts, MaxLatency;
+display Flow, LinkActivation, TotalFlowCosts, MaxLatency > Progetto_Bradan_Graziani/VideoOnDemand_v1.2.txt;
+# quit;

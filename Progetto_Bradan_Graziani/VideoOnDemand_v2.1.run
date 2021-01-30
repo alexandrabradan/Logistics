@@ -1,0 +1,20 @@
+reset;
+model Progetto_Bradan_Graziani/VideoOnDemand_v2.1.mod;
+data Progetto_Bradan_Graziani/VideoOnDemand_v2.1.dat;
+option solver cplex;
+solve;
+for {(i,j) in Links}{
+if i == 'A' and j == 'B' then{
+	let Latency1 := Latency1 + Flow1[i,j]*LinkActivation[i,j];
+	let Latency2 := Latency2 + Latency1;	# delay to avoid clashes
+	let Latency2 := Latency2 + Flow2[i,j]*LinkActivation[i,j];
+	}
+else{
+	let Latency1 := Latency1 + Flow1[i,j]*LinkActivation[i,j];
+	let Latency2 := Latency2 + Flow2[i,j]*LinkActivation[i,j];
+}
+}
+let MaxLatency := max(Latency1, Latency2);
+display Flow1, Flow2, LinkActivation, TotalFlowCosts, MaxLatency;
+display Flow1, Flow2, LinkActivation, TotalFlowCosts, MaxLatency > Progetto_Bradan_Graziani/VideoOnDemand_v2.1.txt;
+# quit;

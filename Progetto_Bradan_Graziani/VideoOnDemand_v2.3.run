@@ -1,0 +1,38 @@
+reset;
+model Progetto_Bradan_Graziani/VideoOnDemand_v2.3.mod;
+data Progetto_Bradan_Graziani/VideoOnDemand_v2.3.dat;
+option solver cplex;
+solve;
+for {(i,j) in Links}{
+if i == 'A' and j == 'B' then{
+    # delay to avoid clashes with Flow1C and Flow2C
+	let Latency1A := Latency1A + Flow1[i,j,'A']*LinkActivation[i,j] + 10;
+	# delay to avoid clashes with Flow1A, Flow1C and Flow2C
+	let Latency2A := Latency2A + Flow2[i,j,'A']*LinkActivation[i,j] + 17;	
+	}
+if i == 'B' and j == 'D' then{
+	let Latency1A := Latency1A + Flow1[i,j,'A']*LinkActivation[i,j];
+	let Latency2A := Latency2A + Flow2[i,j,'A']*LinkActivation[i,j];	
+	}
+if i == 'C' and j == 'D' then{
+	let Latency1C := Latency1C + Flow1[i,j,'C']*LinkActivation[i,j];
+	# delay to avoid clashes with Flow1C 
+	let Latency2C := Latency2C + Flow2[i,j,'C']*LinkActivation[i,j] + 5;	
+	}
+if i == 'D' and j == 'F' then {
+    let Latency1A := Latency1A + Flow1[i,j,'A']*LinkActivation[i,j];
+	let Latency2A := Latency2A + Flow2[i,j,'A']*LinkActivation[i,j];
+	let Latency1C := Latency1C + Flow1[i,j,'C']*LinkActivation[i,j];
+	let Latency2C := Latency2C + Flow2[i,j,'C']*LinkActivation[i,j];
+}
+if i == 'F' and j == 'G' then {
+    let Latency1A := Latency1A + Flow1[i,j,'A']*LinkActivation[i,j];
+	let Latency2A := Latency2A + Flow2[i,j,'A']*LinkActivation[i,j];
+	let Latency1C := Latency1C + Flow1[i,j,'C']*LinkActivation[i,j];
+	let Latency2C := Latency2C + Flow2[i,j,'C']*LinkActivation[i,j];
+}
+}
+let MaxLatency := max(Latency1A, Latency2A,Latency1C, Latency2C);
+display Flow1, Flow2, LinkActivation, TotalFlowCosts, MaxLatency;
+display Flow1, Flow2, LinkActivation, TotalFlowCosts, MaxLatency > Progetto_Bradan_Graziani/VideoOnDemand_v2.3.txt;
+# quit;
