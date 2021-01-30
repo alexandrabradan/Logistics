@@ -1,2 +1,2 @@
 # Logistics
-Project for the optimisation of a flow-based problem, using the AMPL language and the CPLEX optimizer and held in the course of Logistics at University of Pisa.
+Progetto per l'ottimizzazione di un problema di flusso, utilizzando il linguaggio matematico AMPL ed il solver CPLEX, nell'ambito del corso di Logistics tenuto all-Università di Pisa.
